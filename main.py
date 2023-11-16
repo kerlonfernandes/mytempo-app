@@ -110,6 +110,9 @@ class MyGridLayout(GridLayout):
         self.popup = Popup(title="Selecione um arquivo", size=(400, 400), auto_dismiss=False)
 
         file_chooser = FileChooserListView()
+        initial_directory = self.get_default_directory()
+        file_chooser.path = initial_directory
+
         file_chooser.bind(on_submit=self.abrir_arquivo_selecionado)
 
         self.popup.content = file_chooser
@@ -173,6 +176,15 @@ class MyGridLayout(GridLayout):
         
         self.tempos = self.tempos
         return self.tempos
+
+    def get_default_directory(self):
+        # Obtenha o diretório inicial com base no sistema operacional
+        if os.name == 'posix':  # Linux
+            return os.path.expanduser('~/Desktop')
+        elif os.name == 'nt':  # Windows
+            return os.path.join(os.path.expanduser('~'), 'Desktop')
+        else:
+            return os.getcwd()  # Retorna o diretório atual como padrão para outros sistemas
     
     def show_error(self, instance=None, message=""):
         error_message = message
