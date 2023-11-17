@@ -1,0 +1,374 @@
+<MyGridLayout>:
+    cols: 1
+    padding: [20, 20]  # Espaçamento nas bordas esquerda e direita
+    canvas.before:
+        Color:
+            rgba: 239, 239, 239, 1  # Cor branca (R, G, B, Alpha)
+        Rectangle:
+            pos: self.pos
+            size: self.size
+     
+    BoxLayout:
+        orientation: 'horizontal'
+
+        # Primeira coluna
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+            size_hint_x: 0.25  # Define a largura da coluna à esquerda
+
+            TextInput:
+                id: nome_equipamento
+                text: ''  # Valor padrão do TextInput P3542F
+                height: 150  # Altura aumentada
+                font_size: 24  # Tamanho da fonte aumentado
+                bold: True
+
+
+            
+            Button:
+                id: selecionar_arquivo
+                text: 'SELECIONE O ARQUIVO'
+                on_release: root.mostrar_popup()
+                height: 150  # Altura do botão
+                font_size: 24  # Tamanho da fonte aumentado
+                bold: True
+                
+                background_normal: ''
+                background_color: 0.4, 0.4, 0.4, 1
+                color: 1, 1, 1, 1
+                border_radius: [15, ]
+
+            Label:
+                id: selected_file_label
+                text: ""
+                bold: True
+                halign: 'left'
+                color: 40/255, 154/255, 0/255, 1  # Cor da fonte (R, G, B, Alpha)
+                
+
+                text_size: (self.width, None)  # Alinha o texto à esquerda e permite o crescimento horizontal
+
+
+                
+        Widget:  # Widget para criar o espaçamento
+            size_hint_x: None
+            width: 10  # Largura do espaçamento
+            canvas:
+                Color:
+                    rgba: 0, 0, 0, 0  # Cor transparente
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        Widget:  # Widget para criar a linha vertical
+            size_hint_x: None
+            width: 2
+            canvas:
+                Color:
+                    rgba: 0, 0, 0, 1  # Cor preta (R, G, B, Alpha)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        Widget:  # Widget para criar o espaçamento
+            size_hint_x: None
+            width: 25  # Largura do espaçamento
+            canvas:
+                Color:
+                    rgba: 0, 0, 0, 0  # Cor transparente
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+            size_hint_x: 0.55  # Aumente a largura para 50% (0.5)
+            height: 500  # Aumente a altura para o valor desejado
+
+            # Conteúdo da segunda coluna
+            Label:
+                id: internet_status
+                text: "Status: "
+                bold: True
+                color: 0, 0, 0, 1  # Isso define a cor do texto para preto
+                text_size: (self.width, None)  # Alinha o texto à esquerda e permite o crescimento horizontal
+
+
+            Button:
+                on_release: root.atualizarEquipamento()
+                text: 'ATUALIZAR EQUIPAMENTO'  # Botão "ATUALIZAR EQUIPAMENTO"
+                height: 400  # Altura aumentada (maior)
+                font_size: 24  # Tamanho da fonte aumentado
+
+            Label:
+                text: "DATA/HORA ULTIMA ATUALIZAÇÃO: "
+                bold: True
+                color: 0, 0, 0, 1
+                text_size: (self.width, None)  # Alinha o texto à esquerda e permite o crescimento horizontal
+
+
+    Widget:
+        size_hint_y: None  # Fixa a altura do widget
+        height: 2 # Altura da linha
+        canvas:
+            Color:
+                rgba: 0, 0, 0, 1  # Cor preta (R, G, B, Alpha)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+
+    # Adicione este BoxLayout horizontal que conterá os dois conjuntos
+    BoxLayout:
+        orientation: 'horizontal'
+
+        # Primeiro conjunto
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+            size_hint_x: 0.5  # Define a largura para 50% (0.5)
+            height: 500  # Aumente a altura para o valor desejado
+            
+            Spinner:
+                id: checkpoint_spinner
+                text: "SELECIONE O CHECKPOINT"  # Texto padrão exibido no Spinner
+                size_hint: None, None
+                size: 370, 44
+            
+            Button:
+                text: "Salvar Dados"
+                on_release: root.checkpoint_selecionado()
+                size_hint_x: None  # Remova a dica de tamanho horizontal
+                width: 175  # Defina a largura desejada
+                size_hint_y: 0.35 # Reduza a altura vertical
+                bold: True
+                background_color: 0.4, 0.4, 0.4, 1
+                color: 1, 1, 1, 1
+                border_radius: [15]
+
+
+            Button:
+                id: inicia_transmissao
+                on_release: root.prepareToSend()
+                text: "ATIVAR TRANSMISSÃO"
+                size_hint_x: None  # Remova a dica de tamanho horizontal
+                width: 370  # Defina a largura desejada
+                size_hint_y: 0.5  # Reduza a altura vertical
+
+
+        Widget:  # Widget para criar o espaçamento
+            size_hint_x: None
+            width: 10  # Largura do espaçamento
+            canvas:
+                Color:
+                    rgba: 0, 0, 0, 0  # Cor transparente
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        Widget:  # Widget para criar a linha vertical
+            size_hint_x: None
+            width: 2
+            canvas:
+                Color:
+                    rgba: 0, 0, 0, 1  # Cor preta (R, G, B, Alpha)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        Widget:  # Widget para criar o espaçamento
+            size_hint_x: None
+            width: 25  # Largura do espaçamento
+            canvas:
+                Color:
+                    rgba: 0, 0, 0, 0  # Cor transparente
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+
+        # Segundo conjunto
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+            size_hint_x: 0.5  # Define a largura para 50% (0.5)
+            height: 500  # Aumente a altura para o valor desejado
+            pos_hint: {'center_x': 0}  # Alinhe à esquerda
+
+            
+            #quero que fixe todas as labels abaixo a esquerda do BoxLayout
+            Label:
+                id: checkpoint_ativo
+                text: "CHECKPOINT ATIVO: "
+                color: 0, 0, 0, 1
+                bold: True
+                text_size: (self.width, None)  # Alinha o texto à esquerda e permite o crescimento horizontal
+                canvas.before:
+                    Color:
+                        rgba: 217/255, 217/255, 217/255, 1  # Cor de fundo (cinza claro)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+            Label:
+                id: nome_prova
+                text: "NOME DA PROVA: "
+                color: 0, 0, 0, 1
+                bold: True
+                text_size: (self.width, None)
+                canvas.before:
+                    Color:
+                        rgba: 217/255, 217/255, 217/255, 1  # Cor de fundo (cinza claro)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+            Label:
+                id: nome_checkpoint
+                text: "NOME DO CHECKPOINT "
+                color: 0, 0, 0, 1
+                bold: True
+                text_size: (self.width, None)
+                canvas.before:
+                    Color:
+                        rgba: 217/255, 217/255, 217/255, 1  # Cor de fundo (cinza claro)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+
+            Label:
+                id: id_prova
+                text: "ID DA PROVA: "
+                color: 0, 0, 0, 1
+                bold: True
+                text_size: (self.width, None)
+                canvas.before:
+                    Color:
+                        rgba: 217/255, 217/255, 217/255, 1  # Cor de fundo (cinza claro)
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+    Widget:
+        size_hint_y: None  # Fixa a altura do widget
+        height: 2  # Altura da linha
+        canvas:
+            Color:
+                rgba: 0, 0, 0, 1  # Cor preta (R, G, B, Alpha)
+            Rectangle:
+                pos: self.pos
+                size: self.size
+
+
+
+    # Área abaixo das duas colunas
+    BoxLayout:
+        orientation: 'horizontal'
+        height: 28  # Altura desejada da área
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+            size_hint_x: 0.25  # Define a largura da coluna à esquerda
+            Label:
+                text: 'TRANSMITIDO'
+                bold: True
+                font_size: 24  # Tamanho da fonte aumentado
+                color: 0, 0, 0, 1  # Isso define a cor do texto para preto
+            Label:
+                id: transmitido
+                text: '0'
+                bold: True
+                font_size: 90  # Tamanho da fonte aumentado
+                color: 0, 0, 0, 1  # Isso define a cor do texto para preto
+        Widget:  # Widget para criar o espaçamento
+            size_hint_x: None
+            width: 10  # Largura do espaçamento
+            canvas:
+                Color:
+                    rgba: 0, 0, 0, 0  # Cor transparente
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        Widget:  # Widget para criar a linha vertical
+            size_hint_x: None
+            width: 2
+            canvas:
+                Color:
+                    rgba: 0, 0, 0, 1  # Cor preta (R, G, B, Alpha)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        Widget:  # Widget para criar o espaçamento
+            size_hint_x: None
+            width: 25  # Largura do espaçamento
+            canvas:
+                Color:
+                    rgba: 0, 0, 0, 0  # Cor transparente
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+            size_hint_x: 0.50  # Define a largura da coluna do meio (maior)
+            Label:
+                text: 'ARQUIVO DE LEITURA'
+                bold: True
+                font_size: 24  # Tamanho da fonte aumentado
+                color: 0, 0, 0, 1  # Isso define a cor do texto para preto
+            Label:
+                id: arquivo_de_leitura
+                text: '0'
+                bold: True
+                font_size: 90  # Tamanho da fonte aumentado
+                color: 0, 0, 0, 1  # Isso define a cor do texto para preto
+        Widget:  # Widget para criar o espaçamento
+            size_hint_x: None
+            width: 10  # Largura do espaçamento
+            canvas:
+                Color:
+                    rgba: 0, 0, 0, 0  # Cor transparente
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+        Widget:  # Widget para criar a linha vertical
+            size_hint_x: None
+            width: 2
+            canvas:
+                Color:
+                    rgba: 0, 0, 0, 1  # Cor preta (R, G, B, Alpha)
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        Widget:  # Widget para criar o espaçamento
+            size_hint_x: None
+            width: 25  # Largura do espaçamento
+            canvas:
+                Color:
+                    rgba: 0, 0, 0, 0  # Cor transparente
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+        BoxLayout:
+            orientation: 'vertical'
+            spacing: 10
+            size_hint_x: 0.25  # Define a largura da coluna à direita
+            Label:
+                id: mineirados
+                text: 'MINEIRADOS'
+                bold: True
+                font_size: 24  # Tamanho da fonte aumentado
+                color: 0, 0, 0, 1  # Isso define a cor do texto para preto
+            Label:
+                id: atletas_mineirados
+                text: '0'
+                bold: True
+                font_size: 90  # Tamanho da fonte aumentado
+                color: 0, 0, 0, 1  # Isso define a cor do texto para preto
+
+

@@ -1,13 +1,39 @@
+from kivy.app import App
+from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.filechooser import FileChooserListView
 import os
 
-# Diretório que você deseja listar
-diretorio = 'C:/Users/kerlo/Desktop/MyTempoInterface-Kivy/env/Lib/site-packages'
+class FileChooserApp(App):
+    def build(self):
+        layout = BoxLayout(orientation='vertical')
 
-# Use a função listdir para obter uma lista de todos os arquivos e pastas no diretório
-conteudo = os.listdir(diretorio)
+        # Crie uma instância do FileChooserListView
+        file_chooser = FileChooserListView()
 
-# Use uma list comprehension para filtrar apenas os diretórios (pastas)
-pastas = [item for item in conteudo if os.path.isdir(os.path.join(diretorio, item))]
+        # Defina o diretório inicial com base no sistema operacional
+        initial_directory = self.get_default_directory()
+        file_chooser.path = initial_directory
 
-# Agora você tem uma lista de nomes de pastas em 'pastas'
-print(pastas)
+        # Função chamada quando um arquivo ou diretório é selecionado
+        def on_selection(instance, selection, touch):
+            print("Seleção:", selection)
+
+        # Adicione a função de seleção ao evento 'on_selection'
+        file_chooser.bind(on_selection=on_selection)
+
+        # Adicione o FileChooser ao layout
+        layout.add_widget(file_chooser)
+
+        return layout
+
+    def get_default_directory(self):
+        # Obtenha o diretório inicial com base no sistema operacional
+        if os.name == 'posix':  # Linux
+            return os.path.expanduser('~/Desktop')
+        elif os.name == 'nt':  # Windows
+            return os.path.join(os.path.expanduser('~'), 'Desktop')
+        else:
+            return os.getcwd()  # Retorna o diretório atual como padrão para outros sistemas
+
+if __name__ == '__main__':
+    FileChooserApp().run()

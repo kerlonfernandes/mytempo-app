@@ -112,6 +112,7 @@ class MyGridLayout(GridLayout):
         file_chooser = FileChooserListView()
         initial_directory = self.get_default_directory()
         file_chooser.path = initial_directory
+        file_chooser.size_hint_y = 1 # Ajuste a altura conforme necessário
 
         file_chooser.bind(on_submit=self.abrir_arquivo_selecionado)
 
