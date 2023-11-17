@@ -1,6 +1,6 @@
 # MyTempo-App
 
-## How to run
+## How to Download
 
 ### On Windows 
 - Abra o CMD
