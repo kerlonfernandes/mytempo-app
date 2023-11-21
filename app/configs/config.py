@@ -12,6 +12,9 @@ USER = "mytempoesp_base"
 PASSWORD = "6*JqY8Xfa}Hf"
 DATABASE = "mytempoesp_base"
 
+_APLICATION_NAME = "MyTempo - Cronometragem" 
+
+__DIR__ = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
 #CONFIGURAÇÃO DO LOCALDATABASE
 localDatabaseDir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../database/equipamentos.db'))
@@ -46,3 +49,5 @@ def format_timedelta(delta):
 # Exemplo de uso
 delta = datetime.timedelta(seconds=28800)
 tempo_formatado = format_timedelta(delta)
+
+print(__DIR__)

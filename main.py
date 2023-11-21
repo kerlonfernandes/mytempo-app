@@ -27,6 +27,9 @@ from app.classes.queryConstructorSqlite import Local_Database
 from app.classes.helpersClass import *
 from app.classes.readfiles import *
 
+#configurações
+from app.configs.config import __DIR__
+from app.configs.config import _APLICATION_NAME
 
 #config App interface
 Config.set('graphics', 'width', '800')
@@ -92,8 +95,18 @@ class MyGridLayout(GridLayout):
 
         self.thread_internet = threading.Thread(target=self.checkInternetStatus)
         self.thread_internet.start()
-
+        self.create_dir(_APLICATION_NAME)
         self.getStartEquip()
+
+    def createNewDir(self):
+        import os
+        
+        
+        diretorio = os.path.abspath(os.path.join(os.path.dirname(__file__), '../'))
+
+        # Verifica se o diretório não existe antes de criar
+        if not os.path.exists(__DIR__):
+            os.makedirs(diretorio)
 
     def getStartEquip(self):
 
@@ -178,14 +191,42 @@ class MyGridLayout(GridLayout):
         self.tempos = self.tempos
         return self.tempos
 
+
+    def create_dir(self, app_name):
+        sistema_operacional = os.name
+
+        # Diretório padrão no Windows (C:\)
+        if sistema_operacional == 'nt':
+            diretorio_raiz = 'C:\\'
+        # Diretório padrão no Linux (/)
+        elif sistema_operacional == 'posix':
+            diretorio_raiz = '/'
+        else:
+            print("Sistema operacional não suportado.")
+            return
+
+        app_name = _APLICATION_NAME
+
+        caminho_completo = os.path.join(diretorio_raiz, app_name)
+
+        if not os.path.exists(caminho_completo):
+            try:
+                # Cria o diretório
+                os.makedirs(caminho_completo)
+                print(f"Diretório '{caminho_completo}' criado com sucesso.")
+            except Exception as e:
+                print(f"Erro ao criar o diretório: {e}")
+        else:
+            print(f"Diretório '{caminho_completo}' já existe.")
+
+
     def get_default_directory(self):
-        # Obtenha o diretório inicial com base no sistema operacional
         if os.name == 'posix':  # Linux
             return os.path.expanduser('~/Desktop')
         elif os.name == 'nt':  # Windows
             return os.path.join(os.path.expanduser('~'), 'Desktop')
         else:
-            return os.getcwd()  # Retorna o diretório atual como padrão para outros sistemas
+            return os.getcwd()
     
     def show_error(self, instance=None, message=""):
         error_message = message
@@ -202,6 +243,7 @@ class MyGridLayout(GridLayout):
         close_button.bind(on_release=popup.dismiss)
 
         popup.open()
+
 
     def atualizarEquipamento(self):
         checkpoint_values = []
@@ -222,7 +264,7 @@ class MyGridLayout(GridLayout):
             self.show_error(message="Você precisa ter conexão com a internet \npara executar esta ação.")
 
     def checkpoint_selecionado(self):
-        spinner = self.ids.checkpoint_spinner  # Substitua 'checkpoint_spinner' pelo ID do seu Spinner
+        spinner = self.ids.checkpoint_spinner 
         valor_selecionado = spinner.text
         if valor_selecionado:
             try:
@@ -271,7 +313,6 @@ class MyGridLayout(GridLayout):
                     label.text = "Status: Sem conexão com a internet"
                     self.internet_status = False
 
-                # Aguarda um intervalo antes de verificar novamente (por exemplo, a cada 5 segundos)
                 time.sleep(5)
 
 
@@ -414,6 +455,7 @@ class MyGridLayout(GridLayout):
             if novo_tamanho != self.tamanho_atual:
                 print("Arquivo foi modificado! Executando ação...")
                 self.tamanho_atual = novo_tamanho
+
                 print(self.tamanho_atual)
                 self.tentativas_sem_alteracao = 0
                  
