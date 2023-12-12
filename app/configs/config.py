@@ -12,7 +12,7 @@ USER = "mytempoesp_base"
 PASSWORD = "6*JqY8Xfa}Hf"
 DATABASE = "mytempoesp_base"
 
-_APLICATION_NAME = "MyTempo - Cronometragem" 
+_APLICATION_NAME = "MyTempo - Arquivo" 
 
 __DIR__ = os.path.abspath(os.path.join(os.path.dirname(__file__)))
 
@@ -50,4 +50,3 @@ def format_timedelta(delta):
 delta = datetime.timedelta(seconds=28800)
 tempo_formatado = format_timedelta(delta)
 
-print(__DIR__)

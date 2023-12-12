@@ -220,13 +220,15 @@ class MyGridLayout(GridLayout):
             print(f"Diretório '{caminho_completo}' já existe.")
 
 
+
     def get_default_directory(self):
         if os.name == 'posix':  # Linux
             return os.path.expanduser('~/Desktop')
         elif os.name == 'nt':  # Windows
-            return os.path.join(os.path.expanduser('~'), 'Desktop')
+            return "C:\\MyTempo - Arquivo"
         else:
             return os.getcwd()
+
     
     def show_error(self, instance=None, message=""):
         error_message = message
