@@ -47,6 +47,6 @@ def format_timedelta(delta):
     return formato_tempo
 
 # Exemplo de uso
-delta = datetime.timedelta(seconds=28800)
-tempo_formatado = format_timedelta(delta)
+# delta = datetime.timedelta(seconds=28800)
+# tempo_formatado = format_timedelta(delta)
 
