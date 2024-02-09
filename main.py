@@ -211,7 +211,7 @@ class MyGridLayout(GridLayout):
 
         if not os.path.exists(caminho_completo):
             try:
-                # Cria o diretório
+            
                 os.makedirs(caminho_completo)
                 print(f"Diretório '{caminho_completo}' criado com sucesso.")
             except Exception as e:
@@ -297,14 +297,11 @@ class MyGridLayout(GridLayout):
             except:
                 self.show_error(message="Você precisa Buscar um equipamento.")
 
-     
-        #atualiza labels 
 
     def checkInternetStatus(self):
       
             while True:
                 try:
-                    # Tenta conectar-se ao servidor do Google (8.8.8.8) na porta 53 (DNS)
                     socket.create_connection(("8.8.8.8", 53), timeout=5)
                     self.internet_status = True
 
